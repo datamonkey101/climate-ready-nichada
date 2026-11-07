@@ -1,0 +1,9 @@
+// Cloudflare settings for the live readings Worker (ISB air quality and lightning).
+// This Worker is NOT updated automatically from GitHub. To change it, edit
+// worker.js here (so there's a record), then paste it into Cloudflare:
+// Workers & Pages > nichada-live > Edit code > Deploy.
+{
+  "name": "nichada-live",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01"
+}
