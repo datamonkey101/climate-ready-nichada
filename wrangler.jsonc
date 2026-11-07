@@ -1,0 +1,17 @@
+// Cloudflare settings for the app. Cloudflare reads this file every time
+// a change is saved on GitHub, then puts the app live.
+// You shouldn't need to edit it.
+{
+  // Must match the app's name in Cloudflare (Workers & Pages).
+  "name": "climate-ready-nichada",
+  "compatibility_date": "2026-10-01",
+  // The folder with the app's files. Only this folder is put on the website.
+  "assets": { "directory": "./app" },
+  // The app's web addresses.
+  "routes": [
+    { "pattern": "climateready.app", "custom_domain": true },
+    { "pattern": "www.climateready.app", "custom_domain": true }
+  ],
+  // Also keep the free ...workers.dev address working.
+  "workers_dev": true
+}
