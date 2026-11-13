@@ -345,6 +345,9 @@ input[type=range] { width: 100%; height: 32px; }
 .stat > span { display: block; font-size: 14px; color: var(--muted); }
 .stat b { font-size: 18px; font-weight: 600; }
 .over { font-size: 14px; color: var(--red-dark); }
+.update-toast { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(560px, calc(100% - 32px)); z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 12px 12px 16px; border-radius: 12px; background: var(--ink); color: #fff; font-size: 15px; box-shadow: 0 8px 24px rgba(23,32,27,.25); }
+.update-toast button { flex: none; min-height: 40px; padding: 0 16px; border: 0; border-radius: 8px; background: #fff; color: var(--primary); font: 700 15px var(--font-head); cursor: pointer; }
+@media print { .update-toast { display: none !important; } }
 .sim-disclaimer { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; background: var(--bg-2); color: var(--text-2); font-size: 14px; line-height: 1.5; }
 .sim-disclaimer svg { flex: none; margin-top: 1px; color: var(--muted); }
 .field-label { font-weight: 600; margin-bottom: 8px; }
@@ -1414,6 +1417,13 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
 </footer>
 </div>
 
+<!-- "New version available" message. Appears at the bottom of the screen when
+     a newer version of the app has been put live. Script: search "UPDATE CHECK". -->
+<div class="update-toast" id="update-toast" role="status" hidden>
+  <span><span lang="en">A new version of the app is available.</span><span lang="th">มีแอปเวอร์ชันใหม่แล้ว</span></span>
+  <button type="button" id="update-btn"><span lang="en">Update</span><span lang="th">อัปเดต</span></button>
+</div>
+
 
 <script>
 /* ==========================================================================
@@ -2161,6 +2171,51 @@ document.querySelectorAll('.tab').forEach(tab => {
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
   }
+})();
+
+// ---------- UPDATE CHECK ("A new version of the app is available") ----------
+// When someone opens the app, it notes which version of the page they have.
+// Each time they come back to it (and every 30 minutes while it's open), it
+// quietly checks the website. If the page has changed, a message offers
+// "Update", which reloads the app. Saved checklists and plans are kept.
+// Works for any change to index.html; nothing to update by hand.
+(function () {
+  if (location.protocol !== 'https:') return;
+  const toast = document.getElementById('update-toast');
+  // A short fingerprint of the page's text, so two versions can be compared.
+  const fingerprint = (text) => { let h = 5381; for (let i = 0; i < text.length; i++) h = (h * 33 ^ text.charCodeAt(i)) >>> 0; return h + ':' + text.length; };
+  const pageUrl = new URL('./', location.href).href;
+  const fromWeb = () => fetch(pageUrl, { cache: 'no-store' }).then(r => r.ok ? r.text() : Promise.reject()).then(fingerprint);
+  const fromPhone = () => ('caches' in window)
+    ? caches.match(location.href.split('#')[0]).then(r => r || caches.match(pageUrl)).then(r => r ? r.text().then(fingerprint) : null)
+    : Promise.resolve(null);
+
+  let mine = null;
+  // Opened online: the page just came from the website, so that's the version showing.
+  // Opened offline: the page came from the copy saved on the phone.
+  const start = () => (navigator.onLine ? fromWeb() : Promise.reject())
+    .catch(fromPhone)
+    .then(f => { mine = f; })
+    .catch(() => {});
+
+  let checking = false;
+  const check = () => {
+    if (checking || !navigator.onLine || !toast.hidden) return;
+    if (!mine) { start(); return; }
+    checking = true;
+    fromWeb().then(f => { if (f !== mine) toast.hidden = false; })
+      .catch(() => {})
+      .finally(() => { checking = false; });
+    // Also let the offline copy refresh itself.
+    if (navigator.serviceWorker) navigator.serviceWorker.getRegistration().then(r => r && r.update()).catch(() => {});
+  };
+
+  window.addEventListener('load', start);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+  window.addEventListener('online', check);
+  setInterval(check, 30 * 60 * 1000);
+
+  document.getElementById('update-btn').addEventListener('click', () => location.reload());
 })();
 
 // ---------- Household readiness (home screen) ----------

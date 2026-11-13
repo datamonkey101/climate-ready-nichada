@@ -11,7 +11,7 @@
    You don't need to edit this file. Upload it with the other files.
    ========================================================================== */
 
-const CACHE = 'climate-ready-nichada-v5';
+const CACHE = 'climate-ready-nichada-v6';
 
 // The app's own files, saved on first visit.
 const APP_FILES = ['./', 'index.html', 'logo.jpg', 'icon.png', 'icon-192.png', 'icon-maskable.png', 'manifest.webmanifest'];
