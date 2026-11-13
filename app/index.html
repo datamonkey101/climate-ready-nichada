@@ -345,6 +345,13 @@ input[type=range] { width: 100%; height: 32px; }
 .stat > span { display: block; font-size: 14px; color: var(--muted); }
 .stat b { font-size: 18px; font-weight: 600; }
 .over { font-size: 14px; color: var(--red-dark); }
+.sim-disclaimer { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; background: var(--bg-2); color: var(--text-2); font-size: 14px; line-height: 1.5; }
+.sim-disclaimer svg { flex: none; margin-top: 1px; color: var(--muted); }
+.field-label { font-weight: 600; margin-bottom: 8px; }
+.tabs.seg-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.seg { min-height: 52px; border: 0; border-radius: 9px; background: transparent; color: var(--text-2); font: 600 16px/1.2 var(--font-head); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.seg small { font: 500 13px var(--font-body); color: var(--muted); }
+.seg[aria-checked="true"] { background: var(--panel); color: var(--primary); box-shadow: 0 1px 2px rgba(23,32,27,.12); }
 .tip { display: flex; gap: 12px; align-items: flex-start; color: var(--text-2); padding: 0 4px; }
 .tip svg { color: var(--primary); margin-top: 2px; }
 .bars { display: flex; align-items: flex-end; gap: 4px; height: 150px; }
@@ -500,7 +507,7 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
       <span lang="en">El Niño 2026/27</span><span lang="th">เอลนีโญ 2569/70</span>
     </div>
     <h1 class="title-big">Climate Ready Nichada</h1>
-    <p class="subtitle"><span lang="en">Community preparedness resources for extreme climate events</span><span lang="th">ข้อมูลเตรียมพร้อมรับมือสภาพอากาศสุดขั้วสำหรับชุมชน</span></p>
+    <p class="subtitle"><span lang="en">Community preparedness resources for extreme climate events</span><span lang="th">ข้อมูลเพื่อเตรียมพร้อมรับมือสภาพอากาศสุดขั้วสำหรับชุมชน</span></p>
   </div>
   <div class="top-sub">
     <a class="back" href="#home" aria-label="Back to home" data-aria-th="กลับหน้าหลัก">
@@ -803,7 +810,7 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
        up by their data-count names — keep those names as they are.
        ------------------------------------------------------------------ -->
   <section class="card calc">
-    <h2><span lang="en">How much do you need?</span><span lang="th">ต้องเตรียมเท่าไร?</span></h2>
+    <h2><span lang="en">How much do you need?</span><span lang="th">ต้องเตรียมตัวอย่างไร?</span></h2>
     <p class="note"><span lang="en">Enter who is in your home and how many days to plan for.</span><span lang="th">ใส่จำนวนคนและสัตว์เลี้ยงในบ้าน และจำนวนวันที่ต้องการเตรียม</span></p>
     <div class="counters">
       <div class="counter-row"><span id="lbl-adults"><span lang="en">Adults</span><span lang="th">ผู้ใหญ่</span></span>
@@ -1174,7 +1181,7 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
   <p class="intro" lang="th">ปรากฏการณ์เอลนีโญปี 2569/70 คือ<a href="https://www.theclimatebrink.com/p/is-this-el-nino-a-glimpse-of-a-future" target="_blank" rel="noopener">ภาพตัวอย่างของอนาคตที่ร้อนขึ้น</a> (ภาษาอังกฤษ) แต่อนาคตของเรายังไม่ได้ถูกกำหนด ความร่วมมือระดับโลกและการเปลี่ยนแปลงเชิงโครงสร้างเป็นสิ่งสำคัญ แต่การกระทำเล็ก ๆ ในท้องถิ่นก็สร้างความแตกต่างและเป็นแรงบันดาลใจให้ผู้อื่นได้ ทางเลือกที่เป็นมิตรต่อสภาพภูมิอากาศส่วนใหญ่ยังดีต่อสุขภาพและกระเป๋าเงินของคุณด้วย</p>
 
   <article class="card">
-    <h2><span lang="en">Fly a little less</span><span lang="th">บินให้น้อยลงสักหน่อย</span></h2>
+    <h2><span lang="en">Fly a little less</span><span lang="th">เดินทางโดยเครื่องบินให้น้อยลงสักหน่อย</span></h2>
     <p lang="en">Flying is amazing, but it’s one of our <a href="https://www.theguardian.com/environment/ng-interactive/2019/jul/19/carbon-calculator-how-taking-one-flight-emits-as-much-as-many-people-do-in-a-year" target="_blank" rel="noopener">more polluting habits</a>. Only a small minority of people fly, and those who do contribute disproportionately. Consider more local trips. What better place than Thailand to explore?</p>
     <p lang="th">การเดินทางด้วยเครื่องบินเป็นเรื่องวิเศษ แต่ก็เป็นหนึ่งใน<a href="https://www.theguardian.com/environment/ng-interactive/2019/jul/19/carbon-calculator-how-taking-one-flight-emits-as-much-as-many-people-do-in-a-year" target="_blank" rel="noopener">พฤติกรรมที่ก่อมลพิษสูง</a>ของเรา มีคนเพียงส่วนน้อยที่ได้ขึ้นเครื่องบิน และคนกลุ่มนี้ปล่อยคาร์บอนมากเกินสัดส่วน ลองเที่ยวใกล้บ้านให้มากขึ้น ประเทศไทยมีที่เที่ยวมากมายให้สำรวจ</p>
   </article>
@@ -1240,6 +1247,12 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
   <p class="intro" lang="en">Every degree you set your AC lower makes it work harder, and the hotter it is outside, the less efficient it gets. Drag the sliders to see how much power it uses.</p>
   <p class="intro" lang="th">ยิ่งตั้งแอร์ต่ำลงทีละองศา แอร์ยิ่งต้องทำงานหนักขึ้น และยิ่งข้างนอกร้อน แอร์ยิ่งทำงานได้ไม่มีประสิทธิภาพ เลื่อนแถบเพื่อดูว่าแอร์ใช้ไฟเท่าไร</p>
 
+  <!-- Disclaimer: keep this near the top so nobody reads the numbers as a bill. -->
+  <p class="sim-disclaimer">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg>
+    <span><span lang="en">This is a simple simulation to show how your settings change power use. The figures are rough guides, not a prediction of your electricity bill.</span><span lang="th">นี่เป็นการจำลองอย่างง่าย เพื่อแสดงว่าการตั้งค่าแอร์มีผลต่อการใช้ไฟอย่างไร ตัวเลขเป็นเพียงค่าประมาณ ไม่ใช่การคาดการณ์ค่าไฟจริงของคุณ</span></span>
+  </p>
+
   <section class="card" style="gap:18px">
     <div>
       <div class="slider-row"><label for="sim-out"><span lang="en">Outside temperature</span><span lang="th">อุณหภูมิภายนอก</span></label><span class="big-val" style="color:var(--accent)"><span id="sim-out-val"></span>°C</span></div>
@@ -1250,6 +1263,14 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
       <div class="slider-row"><label for="sim-set"><span lang="en">AC set to</span><span lang="th">ตั้งแอร์ที่</span></label><span class="big-val" style="color:var(--primary)"><span id="sim-set-val"></span>°C</span></div>
       <input id="sim-set" type="range" step="1" style="accent-color:var(--primary)">
       <div class="range-ends"><span id="sim-set-min"></span><span id="sim-set-max"></span></div>
+    </div>
+    <!-- Electricity price: House or Condo. The prices are in SETTINGS: AC SIMULATOR. -->
+    <div>
+      <div class="slider-row"><span class="field-label" id="sim-price-label"><span lang="en">You pay for electricity as a</span><span lang="th">ค่าไฟของคุณคิดแบบ</span></span></div>
+      <div class="tabs seg-2" role="radiogroup" aria-labelledby="sim-price-label">
+        <button class="seg" type="button" role="radio" data-price="house"><span lang="en">House</span><span lang="th">บ้าน</span><small class="sim-price-house"></small></button>
+        <button class="seg" type="button" role="radio" data-price="condo"><span lang="en">Condo</span><span lang="th">คอนโด</span><small class="sim-price-condo"></small></button>
+      </div>
     </div>
   </section>
 
@@ -1374,7 +1395,7 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
 
   <div class="btn-row">
     <button class="btn" type="button" id="fc-print"><span lang="en">Print or save as PDF</span><span lang="th">พิมพ์หรือบันทึกเป็น PDF</span></button>
-    <button class="btn soft" type="button" id="fc-share"><span lang="en">Share as a message</span><span lang="th">ส่งเป็นข้อความ</span></button>
+    <button class="btn soft" type="button" id="fc-share"><span lang="en">Share as a message</span><span lang="th">แชร์เป็นข้อความ</span></button>
   </div>
   <p class="note" id="fc-shared" hidden role="status"></p>
 </section>
@@ -1400,9 +1421,12 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
    Change these numbers to adjust the simulator. No other code changes needed.
    ========================================================================== */
 const AC = {
-  pricePerKwh:   4.2,   // Baht per kWh. MEA household rate is ฿3 for the first 200 units,
-                        // about ฿4.16–4.36 above that (from Sept 2026), plus Ft and VAT.
-                        // Homes running AC are usually above 200 units. Condos often charge ฿7–9.
+  // Electricity price in Baht per kWh. People choose House or Condo on the screen.
+  priceHouse:    4.5,   // MEA/PEA household rate: ฿3 for the first 200 units, about ฿4.16–4.36
+                        // above that (from Sept 2026); adding Ft and 7% VAT brings it to about ฿4.5.
+                        // Homes running AC are usually above 200 units, so the AC's units cost this.
+  priceCondo:    8,     // Condos usually re-bill electricity at their own rate, often ฿7–9.
+  priceStart:    'house', // which one is chosen at first: 'house' or 'condo'
   hoursPerNight: 8,     // How many hours a day the AC runs.
   daysPerMonth:  30,
 
@@ -1690,6 +1714,21 @@ document.querySelectorAll('.tab').forEach(tab => {
   $('sim-set-min').textContent = AC.setMin + '°C';     $('sim-set-max').textContent = AC.setMax + '°C';
   setAll('sim-hours', AC.hoursPerNight);
 
+  // House / Condo price choice (remembered on this phone).
+  const fmtRate = n => '฿' + (Number.isInteger(n) ? n : n.toFixed(2)) + '/kWh';
+  setAll('sim-price-house', fmtRate(AC.priceHouse));
+  setAll('sim-price-condo', fmtRate(AC.priceCondo));
+  let priceKind = load('settings').acPrice || AC.priceStart;
+  const price = () => (priceKind === 'condo' ? AC.priceCondo : AC.priceHouse);
+  const segs = document.querySelectorAll('#ac-simulator .seg');
+  const showPrice = () => segs.forEach(b => b.setAttribute('aria-checked', b.dataset.price === priceKind ? 'true' : 'false'));
+  segs.forEach(b => b.addEventListener('click', () => {
+    priceKind = b.dataset.price;
+    const s = load('settings'); s.acPrice = priceKind; save('settings', s);
+    showPrice(); render();
+  }));
+  showPrice();
+
   // Power the AC draws (kW) for an outside temperature o and setting t.
   // Heat to remove = base heat + leakage × temperature gap (limited by the unit's capacity).
   // Electricity used = heat removed ÷ efficiency (COP).
@@ -1728,15 +1767,15 @@ document.querySelectorAll('.tab').forEach(tab => {
     $('sim-watts').style.color = colour;
     $('sim-meter').style.background = colour;
     $('sim-meter').style.width = Math.min(100, cur.kw / AC.chartMaxKw * 100) + '%';
-    $('sim-night').textContent = perDay.toFixed(1) + T(' kWh · ', ' หน่วย · ') + baht(perDay * AC.pricePerKwh);
-    $('sim-month').textContent = '≈ ' + baht(perDay * AC.pricePerKwh * AC.daysPerMonth);
+    $('sim-night').textContent = perDay.toFixed(1) + T(' kWh · ', ' หน่วย · ') + baht(perDay * price());
+    $('sim-month').textContent = '≈ ' + baht(perDay * price() * AC.daysPerMonth);
     $('sim-over').hidden = !cur.over;
 
     // "Raise it 1°C" tip
     if (t < AC.setMax) {
       const up = model(o, t + 1);
       const pct = Math.round((1 - up.kw / cur.kw) * 100);
-      const saving = baht((cur.kw - up.kw) * AC.hoursPerNight * AC.pricePerKwh * AC.daysPerMonth);
+      const saving = baht((cur.kw - up.kw) * AC.hoursPerNight * price() * AC.daysPerMonth);
       $('sim-tip-text').innerHTML = T(
         'Raising it 1°C to <strong>' + (t + 1) + '°C</strong> saves about <strong>' + pct + '%</strong>, roughly ' + saving + ' a month.',
         'ปรับเพิ่ม 1°C เป็น <strong>' + (t + 1) + '°C</strong> ประหยัดได้ประมาณ <strong>' + pct + '%</strong> หรือราว ' + saving + ' ต่อเดือน');
@@ -1755,9 +1794,9 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 
     $('sim-assumptions').textContent = T(
-      'Rough estimate for ' + AC.unitDescription + ', at ฿' + AC.pricePerKwh.toFixed(2) +
+      'Rough estimate for ' + AC.unitDescription + ', at ฿' + price().toFixed(2) +
       ' per kWh. Real use depends on room size, insulation, sun, and the unit’s efficiency rating.',
-      'ค่าประมาณสำหรับ' + AC.unitDescriptionTh + ' ที่ค่าไฟหน่วยละ ฿' + AC.pricePerKwh.toFixed(2) +
+      'ค่าประมาณสำหรับ' + AC.unitDescriptionTh + ' ที่ค่าไฟหน่วยละ ฿' + price().toFixed(2) +
       ' การใช้ไฟจริงขึ้นอยู่กับขนาดห้อง ฉนวนกันความร้อน แสงแดด และประสิทธิภาพของเครื่อง');
   }
   out.addEventListener('input', render);
