@@ -177,6 +177,18 @@ main { flex: 1; padding: 20px 16px 48px; }
 .card .note { padding: 0; }
 .note { font-size: 13px; color: var(--muted); }
 .placeholder { color: var(--muted); font-style: italic; }
+/* Give help: organisation cards and bank details */
+.org-tag { font-size: 14px; font-weight: 600; color: var(--orchid); margin-top: -6px; }
+.bank { border-radius: 10px; background: var(--bg-2); padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.bank h3 { font-size: 16px; }
+.bank dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; column-gap: 12px; row-gap: 6px; font-size: 15px; }
+.bank dt { color: var(--muted); }
+.bank dd { margin: 0; overflow-wrap: anywhere; }
+.bank .acct { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.bank .acct b { font-size: 17px; letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.copy { min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--primary); font: 600 14px var(--font-body); cursor: pointer; }
+.copy.done { color: var(--muted); }
+@media (max-width: 380px) { .bank dl { grid-template-columns: 1fr; } .bank dt { margin-top: 4px; } }
 .source-note { font-size: 14px; color: var(--muted); margin-bottom: -12px; }
 
 /* Content sections read like a document: a rule above each, no boxes. */
@@ -465,6 +477,14 @@ body[data-screen="ac-simulator"] .bar.on i { background: var(--orchid); }
   .fcard { border-width: 1.5pt; break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .fcard-plan dt, .fcard-plan dd { font-size: 12pt; padding: 9pt 0; }
 }
+
+/* PDF of a printable document (installed app): laid out off screen at A4 width,
+   with the same two-column lists as the printed version. */
+.pdf-render { position: fixed; left: -10000px; top: 0; width: 688px; padding: 0; background: #fff; }
+.pdf-render .fcard { box-shadow: none; }
+.pdf-render .doc-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
+.pdf-render .doc-group { break-inside: avoid; }
+.pdf-render [id="bag-personal"] { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 18px; }
 
 /* ---------- Footer ---------- */
 footer { padding: 8px 20px 36px; font-size: 13px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
@@ -1161,17 +1181,42 @@ html[data-lang="th"] h1, html[data-lang="th"] h2, html[data-lang="th"] h3, html[
 
 <!-- ==========================================================================
      SCREEN: GIVE HELP
-     TODO: fill in real organisations. For each card, replace the grey
-     placeholder lines with a description and add a button, e.g.:
-       <a class="btn" href="https://their-site.org" target="_blank" rel="noopener"><span lang="en">Donate</span><span lang="th">บริจาค</span></a>
+     Organisations people can support. One <article class="card org"> each.
+     To add another, copy the whole HomeNet Thailand card and change the text,
+     link and bank details. The "Copy" button copies whatever is in
+     data-copy="...", so update that too.
      ========================================================================== -->
 <section class="screen" id="give-help" data-title="Give help" data-title-th="ร่วมช่วยเหลือ">
   <p class="intro" lang="en">Vulnerable communities are often hit much harder than more affluent ones, deepening existing inequalities. Please consider donating or volunteering. The world needs better neighbours.</p>
   <p class="intro" lang="th">ชุมชนที่เปราะบางมักได้รับผลกระทบหนักกว่าชุมชนที่มีฐานะดีกว่ามาก ซึ่งยิ่งทำให้ความเหลื่อมล้ำที่มีอยู่รุนแรงขึ้น โปรดพิจารณาบริจาคหรือเป็นอาสาสมัคร โลกต้องการเพื่อนบ้านที่ดี</p>
-  <article class="card"><h2><span lang="en">Food security</span><span lang="th">ความมั่นคงทางอาหาร</span></h2><p class="placeholder"><span lang="en">[Organisation name, short description, donate / volunteer link]</span><span lang="th">[ชื่อองค์กร คำอธิบายสั้น ๆ ลิงก์บริจาค/อาสาสมัคร]</span></p></article>
-  <article class="card"><h2><span lang="en">Farmer livelihood</span><span lang="th">การดำรงชีพของเกษตรกร</span></h2><p class="placeholder"><span lang="en">[Organisation name, short description, donate / volunteer link]</span><span lang="th">[ชื่อองค์กร คำอธิบายสั้น ๆ ลิงก์บริจาค/อาสาสมัคร]</span></p></article>
-  <article class="card"><h2><span lang="en">Local flood victim support</span><span lang="th">ช่วยเหลือผู้ประสบภัยน้ำท่วมในพื้นที่</span></h2><p class="placeholder"><span lang="en">[Organisation name, short description, donate / volunteer link]</span><span lang="th">[ชื่อองค์กร คำอธิบายสั้น ๆ ลิงก์บริจาค/อาสาสมัคร]</span></p></article>
-  <article class="card"><h2><span lang="en">Local education support</span><span lang="th">สนับสนุนการศึกษาในพื้นที่</span></h2><p class="placeholder"><span lang="en">[Organisation name, short description, donate / volunteer link]</span><span lang="th">[ชื่อองค์กร คำอธิบายสั้น ๆ ลิงก์บริจาค/อาสาสมัคร]</span></p></article>
+
+  <!-- HomeNet Thailand -->
+  <article class="card org">
+    <h2>HomeNet Thailand</h2>
+    <p class="org-tag"><span lang="en">Climate support for informal workers</span><span lang="th">ช่วยแรงงานนอกระบบรับมือการเปลี่ยนแปลงสภาพภูมิอากาศ</span></p>
+    <p lang="en">HomeNet Thailand helps informal workers adapt to climate change by combining practical heat protection, financial assistance, research and advocacy for stronger government protections.</p>
+    <p lang="th">HomeNet Thailand ช่วยให้แรงงานนอกระบบปรับตัวรับมือกับการเปลี่ยนแปลงสภาพภูมิอากาศ ทั้งการป้องกันความร้อนที่ใช้ได้จริง ความช่วยเหลือทางการเงิน การวิจัย และการผลักดันให้รัฐคุ้มครองแรงงานได้ดีขึ้น</p>
+    <p lang="en">Its work is particularly important for street vendors, motorcycle taxi drivers, domestic workers, market traders and home-based workers, many of whom cannot afford to stop working during extreme heat or flooding.</p>
+    <p lang="th">งานนี้สำคัญอย่างยิ่งสำหรับผู้ค้าแผงลอย ผู้ขับขี่รถจักรยานยนต์รับจ้าง ลูกจ้างทำงานบ้าน ผู้ค้าในตลาด และผู้รับงานไปทำที่บ้าน ซึ่งหลายคนไม่สามารถหยุดทำงานได้ แม้ในช่วงที่อากาศร้อนจัดหรือน้ำท่วม</p>
+    <p lang="en">HomeNet Thailand works closely with WIEGO, the Federation of Informal Workers of Thailand and other partners.</p>
+    <p lang="th">HomeNet Thailand ทำงานใกล้ชิดกับ WIEGO สหพันธ์แรงงานนอกระบบแห่งประเทศไทย และภาคีอื่น ๆ</p>
+
+    <!-- Bank transfer details. Check these with HomeNet Thailand whenever they change. -->
+    <div class="bank">
+      <h3><span lang="en">Donate by bank transfer</span><span lang="th">บริจาคผ่านการโอนเงิน</span></h3>
+      <dl>
+        <dt><span lang="en">Bank</span><span lang="th">ธนาคาร</span></dt>
+        <dd><span lang="en">Siam Commercial Bank (SCB)</span><span lang="th">ธนาคารไทยพาณิชย์ (SCB)</span></dd>
+        <dt><span lang="en">Account name</span><span lang="th">ชื่อบัญชี</span></dt>
+        <dd>Mrs. Suree Wongtrakul / Mr. Natdanai Kunthatchayotanan / Miss Wanida Khotchasan</dd>
+        <dt><span lang="en">Account number</span><span lang="th">เลขที่บัญชี</span></dt>
+        <dd class="acct"><b>047-266853-1</b>
+          <button class="copy" type="button" data-copy="0472668531"><span lang="en">Copy</span><span lang="th">คัดลอก</span></button>
+        </dd>
+      </dl>
+    </div>
+    <a class="btn soft" href="https://www.homenetinternational.org/homenet-thailand/" target="_blank" rel="noopener"><span lang="en">About HomeNet Thailand</span><span lang="th">เกี่ยวกับ HomeNet Thailand</span></a>
+  </article>
 </section>
 
 
@@ -2132,7 +2177,72 @@ document.querySelectorAll('.tab').forEach(tab => {
     return lines.join('\n');
   }
 
-  document.getElementById('fc-print').addEventListener('click', () => window.print());
+  // PRINT BUTTON
+  // In a browser (computer or phone) this opens the normal print window.
+  // In the app installed on a phone's home screen, phones block printing, so
+  // instead the app makes a PDF of the document and opens the share sheet,
+  // where people can Print, Save to Files, or send it on.
+  const installed = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  document.getElementById('fc-print').addEventListener('click', () => (installed ? savePdf() : window.print()));
+
+  // The two tools that turn the document into a PDF. They're only downloaded
+  // the first time someone makes a PDF, then kept for offline use.
+  const PDF_TOOLS = [
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
+  ];
+  const loadScript = (src) => new Promise((ok, fail) => {
+    if (document.querySelector('script[src="' + src + '"]')) return ok();
+    const el = document.createElement('script'); el.src = src; el.onload = ok; el.onerror = fail;
+    document.head.appendChild(el);
+  });
+
+  let busy = false;
+  async function savePdf() {
+    if (busy) return;
+    busy = true;
+    const note = document.getElementById('fc-shared');
+    const say = (en, th) => { note.textContent = T(en, th); note.hidden = false; };
+    say('Making the PDF…', 'กำลังสร้าง PDF…');
+    let holder;
+    try {
+      for (const src of PDF_TOOLS) await loadScript(src);
+      // Lay the document out at A4 width, off screen, and take a picture of it.
+      holder = document.createElement('div');
+      holder.className = 'pdf-render';
+      holder.appendChild(document.querySelector('#family-card .doc:not([hidden])').cloneNode(true));
+      document.body.appendChild(holder);
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+      await Promise.all([...holder.querySelectorAll('img')].map(img => img.complete ? null : new Promise(r => { img.onload = img.onerror = r; })));
+      const canvas = await window.html2canvas(holder, { scale: 2.5, backgroundColor: '#ffffff', logging: false });
+      // Fit the picture on one A4 page with 14 mm margins.
+      const pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+      const maxW = 182, maxH = 269, ratio = canvas.height / canvas.width;
+      let w = maxW, h = w * ratio;
+      if (h > maxH) { h = maxH; w = h / ratio; }
+      pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 14 + (maxW - w) / 2, 14, w, h);
+      const names = { plan: 'Emergency-plan', home: '72-hour-home-checklist', bag: 'Grab-bag-checklist' };
+      const file = new File([pdf.output('blob')], 'Climate-Ready-Nichada-' + names[current] + '.pdf', { type: 'application/pdf' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        note.hidden = true;
+        try { await navigator.share({ files: [file] }); } catch (e) { /* closed the share sheet */ }
+      } else {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(file); a.download = file.name;
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 60000);
+        say('The PDF has been saved to your downloads.', 'บันทึก PDF ไว้ในรายการดาวน์โหลดแล้ว');
+      }
+    } catch (e) {
+      console.warn('PDF failed:', e);
+      say('Couldn’t make the PDF. Connect to the internet and try again, or use “Share as a message”.',
+          'สร้าง PDF ไม่สำเร็จ กรุณาเชื่อมต่ออินเทอร์เน็ตแล้วลองอีกครั้ง หรือใช้ “แชร์เป็นข้อความ”');
+    } finally {
+      if (holder) holder.remove();
+      busy = false;
+    }
+  }
   document.getElementById('fc-share').addEventListener('click', async () => {
     const text = asText(), note = document.getElementById('fc-shared');
     note.hidden = true;
@@ -2248,6 +2358,26 @@ function updateReadiness() {
   btn.textContent = pct === 0 ? T('Start getting ready', 'เริ่มเตรียมพร้อม') : T(next.nextEn, next.nextTh);
 }
 onLang.push(updateReadiness);
+
+// ---------- Copy buttons (e.g. bank account number on Give help) ----------
+document.querySelectorAll('.copy[data-copy]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const value = btn.dataset.copy;
+    let ok = false;
+    try { await navigator.clipboard.writeText(value); ok = true; } catch (e) {
+      // Older phones: copy through a hidden text box.
+      const t = document.createElement('textarea'); t.value = value; t.setAttribute('readonly', '');
+      t.style.position = 'fixed'; t.style.opacity = '0'; document.body.appendChild(t); t.select();
+      try { ok = document.execCommand('copy'); } catch (e2) {}
+      t.remove();
+    }
+    if (!ok) return;
+    const label = btn.innerHTML;
+    btn.classList.add('done');
+    btn.innerHTML = '<span lang="en">Copied</span><span lang="th">คัดลอกแล้ว</span>';
+    setTimeout(() => { btn.classList.remove('done'); btn.innerHTML = label; }, 2000);
+  });
+});
 
 // ---------- INSTALL BANNER ("Get the app on your phone") ----------
 // Works out which phone/browser this is and shows the matching instructions.

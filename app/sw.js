@@ -11,7 +11,7 @@
    You don't need to edit this file. Upload it with the other files.
    ========================================================================== */
 
-const CACHE = 'climate-ready-nichada-v6';
+const CACHE = 'climate-ready-nichada-v7';
 
 // The app's own files, saved on first visit.
 const APP_FILES = ['./', 'index.html', 'logo.jpg', 'icon.png', 'icon-192.png', 'icon-maskable.png', 'manifest.webmanifest'];
@@ -33,8 +33,13 @@ self.addEventListener('fetch', event => {
   const url = new URL(req.url);
   const sameSite = url.origin === self.location.origin;
   const isFont = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
+  // The two small tools the app uses to make PDFs of the printable plans.
+  const isPdfTool = url.hostname === 'cdnjs.cloudflare.com' && /\/(html2canvas|jspdf)\//.test(url.pathname);
   // Live readings (Open-Meteo, the Worker) and other sites: always go to the internet.
-  if (!sameSite && !isFont) return;
+  if (!sameSite && !isFont && !isPdfTool) return;
+  // The app's "is there a new version?" check must always ask the website itself,
+  // never the saved copy, or it would compare two saved copies.
+  if (req.cache === 'no-store') return;
 
   // Pages: try the internet first so updates show up; use the saved copy if offline.
   if (req.mode === 'navigate') {
